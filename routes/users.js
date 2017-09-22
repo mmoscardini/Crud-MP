@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const UserSchema = require('../models/userModel');
+const passport = require ('passport');
+const jwt = require('jsonwebtoken');
+const configDB = require('../config/database');
 
 router.post('/register', (req,res,next)=> {
     let newUser = new UserSchema({
@@ -17,8 +20,36 @@ router.post('/register', (req,res,next)=> {
 
 });
 
-router.post('/auth', (req,res,next)=> {
-    res.send('register');
+router.post('/loginAuth', (req,res,next)=> {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    //Requerir dados do usuário via email da base de dados
+    UserSchema.getUserByEmail(email, function(err, user){
+        if (err) throw err;
+        if (!user){
+            return res.json({success: false, msg: 'Usuário não cadastrado'});
+        }
+        //Compar senhas
+        UserSchema.comparePasswords(password, user.password, function(err, isMatched){
+            if (err) throw err;
+
+            //Senha correta
+            if (isMatched){
+                const token = jwt.sign({user: user}, configDB.secret, {expiresIn: 10800});
+                
+                return res.json({
+                    success:true,
+                    token: 'JWT ' + token,
+                    email: user.email
+                })
+            }
+            //Senha incorreta
+            else{
+                return res.json ({success: false, msg: 'Senha incorreta'});
+            }
+        });
+    });    
 });
 
 router.get('/myAccount', (req,res,next)=> {
