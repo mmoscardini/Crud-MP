@@ -11,6 +11,13 @@ router.post('/register', (req,res,next)=> {
         password: req.body.password
     });
 
+    UserSchema.getUserByEmail(newUser.email,function(err, user){
+        if (err) throw err;
+        if (user){
+            return res.json({success: false, msg: 'Email já cadastrado'});            
+        }
+    });
+
     UserSchema.addUser(newUser,function(err, user){
         if (err)
             res.json({success: false, msg: 'Falha ao registrar usuário. Por favor, tente novamente'});
@@ -40,6 +47,7 @@ router.post('/loginAuth', (req,res,next)=> {
                 
                 return res.json({
                     success:true,
+                    msg: 'Login realizado com sucesso',
                     token: 'JWT ' + token,
                     email: user.email
                 })
@@ -52,8 +60,8 @@ router.post('/loginAuth', (req,res,next)=> {
     });    
 });
 
-router.get('/myAccount', (req,res,next)=> {
-    res.send('register');
+router.get('/myAccount', passport.authenticate('jwt',{session:false}), (req,res,next)=> {
+    res.send('myAccount');
 });
 
 module.exports = router;
