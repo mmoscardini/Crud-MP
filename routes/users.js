@@ -5,7 +5,7 @@ const UserSchema = require('../models/userModel');
 router.post('/register', (req,res,next)=> {
     let newUser = new UserSchema({
         email: req.body.email,
-        senha: req.body.password
+        password: req.body.password
     });
 
     UserSchema.addUser(newUser,function(err, user){
