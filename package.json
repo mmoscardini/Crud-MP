@@ -1,0 +1,30 @@
+{
+  "name": "digiwallet",
+  "version": "1.0.0",
+  "description": "Prototpype of a digital wallet for bitcoins",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "digital",
+    "wallet",
+    "bitcoins",
+    "btc",
+    "security",
+    "cryptography"
+  ],
+  "dependencies": {
+    "express": "*",
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "author": "Matheus M Moscardini",
+  "license": "MIT"
+}
