@@ -12,6 +12,10 @@ const port = 3000;
 app.use(cors());
 //Body Parser middleware
 app.use(bodyParser.json());
+//Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
 
 //Setup MongoDb and Mongoose
 const configDB = require ('./config/database');

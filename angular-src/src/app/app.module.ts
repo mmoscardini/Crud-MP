@@ -16,12 +16,13 @@ import { FooterComponent } from './components/footer/footer.component';
 
 import {ValidateService} from './services/validate.service';
 import {AuthService} from './services/auth.service';
+import {AuthGuard} from './guards/auth.guard';
 
 const appRoute: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'myAccount', component: MyAccountComponent},
+  {path: 'myAccount', component: MyAccountComponent, canActivate:[AuthGuard]},
 ]
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ const appRoute: Routes = [
     RouterModule.forRoot(appRoute),
     FlashMessagesModule
   ],
-  providers: [ValidateService, AuthService],
+  providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

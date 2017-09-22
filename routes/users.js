@@ -61,7 +61,7 @@ router.post('/loginAuth', (req,res,next)=> {
 });
 
 router.get('/myAccount', passport.authenticate('jwt',{session:false}), (req,res,next)=> {
-    res.send('myAccount');
+    res.json({user: req.user});
 });
 
 module.exports = router;
