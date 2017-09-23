@@ -1,2 +1,1 @@
-#digiWallet
 # MP MVP
