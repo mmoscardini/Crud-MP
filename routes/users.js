@@ -7,6 +7,7 @@ const configDB = require('../config/database');
 
 router.post('/register', (req,res,next)=> {
     let newUser = new UserSchema({
+        name: req.body.name,
         email: req.body.email,
         password: req.body.password
     });
@@ -49,6 +50,7 @@ router.post('/loginAuth', (req,res,next)=> {
                     success:true,
                     msg: 'Login realizado com sucesso',
                     token: 'JWT ' + token,
+                    name: user.name,
                     email: user.email
                 })
             }

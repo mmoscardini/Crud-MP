@@ -3,7 +3,10 @@ const bcrypt = require ('bcryptjs');
 const configDB = require ('../config/database');
 
 const UserSchema = mongoose.Schema({
-    email: {
+    name: {
+        type: String,
+        required: true
+    },email: {
         type: String,
         required: true
     },
