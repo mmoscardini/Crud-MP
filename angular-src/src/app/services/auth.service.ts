@@ -16,7 +16,7 @@ export class AuthService {
   registerUser(user){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/users/register', user, {headers:headers})
+    return this.http.post('http://localhost:3000/users/registerClient', user, {headers:headers})
     .map(res=>res.json());
   }
 
@@ -37,7 +37,7 @@ export class AuthService {
 
   resetPassword(curPass, newPass){
     this.loadUser();
-    const requestData = {email: JSON.parse(this.user), currentPass: curPass, newPassword: newPass};
+    const requestData = {email: this.user.email, currentPass: curPass, newPassword: newPass};
 
     this.loadToken();
     let headers = new Headers();
@@ -54,7 +54,7 @@ export class AuthService {
 
   loadUser(){
     const user = localStorage.getItem('user');
-    this.user = user;
+    this.user = JSON.parse(user);
     console.log (this.user);
   }
   

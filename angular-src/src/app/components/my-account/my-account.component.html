@@ -1,7 +1,11 @@
 <div *ngIf="user">
-    <h2 class="page-header">{{user.name}}</h2>
+    <h2 class="page-header">{{user.user}}</h2>
     <ul class="list-group">
-        <li class="list-group-item">Email: {{user.email}}</li>    
+        <li class="list-group-item">Email: {{user.email}}</li>   
+        <li class="list-group-item">Data de cadastro: {{user.registerDate}}</li> 
+        <li class="list-group-item" *ngIf="user.userType == 0">Tipo de usuário: Consumidor</li>  
+        <li class="list-group-item" *ngIf="user.userType == 1">Tipo de usuário: Fornecedor</li>  
+        
     </ul>
     <button type="button" class="btn btn-primary" [routerLink]="['/resetpassword']">Alterar senha</button>
 </div>

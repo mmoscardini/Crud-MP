@@ -3,7 +3,7 @@ const bcrypt = require ('bcryptjs');
 const configDB = require ('../config/database');
 
 const UserSchema = mongoose.Schema({
-    name: {
+    user: {
         type: String,
         required: true
     },email: {
@@ -12,6 +12,16 @@ const UserSchema = mongoose.Schema({
     },
     password:{
         type:String,
+        required: true
+    },
+    userType:{
+        //0 == Client
+        //1 == Supplier
+        type: Number,
+        required: true
+    },
+    registerDate:{
+        type: String,
         required: true
     },
     resetPasswordToken:{
@@ -33,7 +43,7 @@ module.exports. getUserByEmail = function (email, callback){
     User.findOne(query, callback);
 }
 
-module.exports.addUser = function (newUser, callback){
+module.exports.addUser = function (newUser, callback){   
     bcrypt.genSalt(10, function(err, salt){
         bcrypt.hash(newUser.password, salt, function(err, hash){
             if (err){

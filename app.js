@@ -19,6 +19,7 @@ require('./config/passport')(passport);
 
 //Setup MongoDb and Mongoose
 const configDB = require ('./config/database');
+mongoose.Promise = global.Promise;
 mongoose.connect(configDB.db, {useMongoClient: true});
 mongoose.connection.on('connected', ()=>{
     console.log ('Mongoose connected to ' + configDB.db);
