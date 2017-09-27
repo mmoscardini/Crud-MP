@@ -20,7 +20,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit() {
     this.auth.getMyAccount().subscribe(data =>{
-      console.log(data);
+      this.user = data.user;
     }), err => {
       console.log (err);
       return false;

@@ -30,15 +30,32 @@ export class AuthService {
   getMyAccount(){
     let headers = new Headers();
     this.loadToken();
-    headers.append('Content-Type', 'application/json');
     headers.append('Authorization', this.token);
     return this.http.get('http://localhost:3000/users/myAccount', {headers:headers})
     .map(res=>res.json());
   }
 
+  resetPassword(curPass, newPass){
+    this.loadUser();
+    const requestData = {email: JSON.parse(this.user), currentPass: curPass, newPassword: newPass};
+
+    this.loadToken();
+    let headers = new Headers();
+    headers.append('Authorization', this.token);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/resetPassword',requestData , {headers:headers})
+    .map(res=>res.json());
+  }
+
   loadToken(){
     const token = localStorage.getItem('token');
-    this.token;
+    this.token = token;
+  }
+
+  loadUser(){
+    const user = localStorage.getItem('user');
+    this.user = user;
+    console.log (this.user);
   }
   
   storeUserData(token, user){

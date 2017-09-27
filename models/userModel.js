@@ -13,6 +13,12 @@ const UserSchema = mongoose.Schema({
     password:{
         type:String,
         required: true
+    },
+    resetPasswordToken:{
+        type: String
+    },
+    resetPasswordExpires:{
+        type: Date
     }
 });
 
@@ -37,6 +43,19 @@ module.exports.addUser = function (newUser, callback){
             newUser.save(callback);
         });
     });
+}
+
+module.exports.savePassword = function (user, newPassword, callback){
+    //If passwords are diferent hash the new password and save it
+    bcrypt.genSalt(10, function(err, salt){
+        bcrypt.hash(newPassword, salt, function(err, hash){
+            if (err){
+                throw err;
+            }
+            user.password = hash;
+            user.save(callback);
+        });
+    }); 
 }
 
 module.exports.comparePasswords = function(candidatePassword, hash, callback){
