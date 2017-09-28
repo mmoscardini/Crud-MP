@@ -5,6 +5,10 @@ export class ValidateService {
 
   constructor() { }
 
+  valideteFormAllFildsFill(form){
+    
+  }
+
   validateRegisterFilds(user){
     if (user.email == undefined || user.password == undefined){
       return false;

@@ -13,6 +13,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { EditMyAccountComponent } from './components/edit-my-account/edit-my-account.component';
 
 
 import {ValidateService} from './services/validate.service';
@@ -25,6 +26,7 @@ const appRoute: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'myAccount', component: MyAccountComponent, canActivate:[AuthGuard]},
   {path: 'resetpassword', component: ResetPasswordComponent, canActivate:[AuthGuard]},
+  {path: 'editMyAccount', component: EditMyAccountComponent, canActivate:[AuthGuard]},
   
 ]
 @NgModule({
@@ -36,7 +38,8 @@ const appRoute: Routes = [
     LoginComponent,
     MyAccountComponent,
     FooterComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    EditMyAccountComponent
   ],
   imports: [
     BrowserModule,

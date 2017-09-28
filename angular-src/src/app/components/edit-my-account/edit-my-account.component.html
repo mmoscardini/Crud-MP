@@ -1,0 +1,44 @@
+<h2 class="page-header">Editar perfil</h2>
+<form (submit)="OnProfileEditSubmit()">
+  <div class="table">
+    <tr>
+      <td><label>Nome Completo:</label></td>
+      <td><input type="text" [(ngModel)]="username" name="username" placeholder="{{username}}"></td>
+    </tr>
+    <tr>
+      <td><label>Email:</label></td>
+      <td><input type="text" [(ngModel)]="email" name="email" placeholder="{{email}}"></td>
+    </tr>
+    <tr>
+      <td><label>CPF:</label></td>
+      <td><input type="number" [(ngModel)]="cpf" name="cpf" placeholder="{{cpf}}"></td>
+    </tr>
+    <tr>
+      <td>
+        <h3>Endereço</h3>
+      </td>
+    </tr>
+      <tr>
+          <td><label>CEP:</label></td>
+          <td><input type="number" [(ngModel)]="cep" name="cep" placeholder="{{cep}}"></td>
+          <button type="button" class="btn btn-primary" (click)="autoCompleteCEP()">Completar campos abaixo</button>          
+        </tr>
+      <tr>
+        <td><label>Rua:</label></td>
+        <td><input type="text" [(ngModel)]="street" name="street" placeholder="{{street}}"></td>
+      </tr>
+      <tr>
+        <td><label>Complemento:</label></td>
+        <td><input type="text" [(ngModel)]="complement" name="complement" placeholder="{{complement}}"></td>
+      </tr>
+      <tr>
+        <td><label>Cidade:</label></td>
+        <td><input type="text" [(ngModel)]="city" name="city" placeholder="{{city}}"></td>
+      </tr> 
+      <tr>
+        <td><label>Estado:</label></td>
+        <td><input type="text" [(ngModel)]="state" name="state" placeholder="{{state}}"></td>
+      </tr>  
+  </div> 
+  <input type="submit" class="btn btn-primary" value="Enviar">
+</form>

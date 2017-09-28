@@ -21,6 +21,7 @@ const UserSchema = mongoose.Schema({
         street: String,
         complement: String,
         city: String,
+        state: String,
         cep: String
     },
     userType:{

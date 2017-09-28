@@ -35,6 +35,14 @@ export class AuthService {
     .map(res=>res.json());
   }
 
+  editMyAccount(updatedUser){
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.token);
+    return this.http.post('http://localhost:3000/users/myAccount/edit', updatedUser, {headers:headers})
+    .map(res=>res.json());
+  }
+
   resetPassword(curPass, newPass){
     this.loadUser();
     const requestData = {email: this.user.email, currentPass: curPass, newPassword: newPass};

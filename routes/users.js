@@ -135,6 +135,7 @@ router.post('/myAccount/edit', passport.authenticate('jwt', {session: false}),  
         street: req.body.address.street, 
         complement: req.body.address.complement, 
         city: req.body.address.city, 
+        state: req.body.address.state,
         cep: req.body.address.cep
     };
 
