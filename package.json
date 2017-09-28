@@ -16,10 +16,11 @@
     "cryptography"
   ],
   "dependencies": {
-    "express": "*",
     "bcryptjs": "*",
     "body-parser": "*",
     "cors": "*",
+    "cpf_cnpj": "^0.2.0",
+    "express": "*",
     "jsonwebtoken": "*",
     "mongoose": "*",
     "passport": "*",

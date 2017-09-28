@@ -4,12 +4,15 @@ const UserSchema = require('../models/userModel');
 const passport = require ('passport');
 const jwt = require('jsonwebtoken');
 const configDB = require('../config/database');
+var CPF = require("cpf_cnpj").CPF;
 
+
+//Rota para registro de novos usuários-Clientes
 router.post('/registerClient', (req,res,next)=> {
     let date = new Date();
     
     let newUser = new UserSchema({
-        user: req.body.name,
+        username: req.body.name,
         email: req.body.email,
         password: req.body.password,
         userType: 0,
@@ -34,6 +37,7 @@ router.post('/registerClient', (req,res,next)=> {
 
 });
 
+//Rota para alteração de senha
 router.post ('/resetPassword', passport.authenticate('jwt', {session: false}),(req, res, next)=>{
     const email = req.body.email;
     const currentPassCheck = req.body.currentPass;
@@ -77,6 +81,7 @@ router.post ('/resetPassword', passport.authenticate('jwt', {session: false}),(r
     
 })
 
+//Rota para login
 router.post('/loginAuth', (req,res,next)=> {
     const email = req.body.email;
     const password = req.body.password;
@@ -101,7 +106,7 @@ router.post('/loginAuth', (req,res,next)=> {
                     token: 'JWT ' + token,
                     user: {
                         id: user._id,
-                        user: user.user,
+                        username: user.username,
                         email: user.email,
                         userType: user.userType
                     }
@@ -115,8 +120,36 @@ router.post('/loginAuth', (req,res,next)=> {
     });    
 });
 
+//Rota do perfil
 router.get('/myAccount', passport.authenticate('jwt', {session: false}),  (req,res,next)=> {
     res.json({user: req.user});
+});
+
+//Rota edição do perfil
+router.post('/myAccount/edit', passport.authenticate('jwt', {session: false}),  (req,res,next)=> {
+    const userId = req.body.userId;
+    const username = req.body.username;
+    const email = req.body.email;
+    const cpf = req.body.cpf;
+    const address = {
+        street: req.body.address.street, 
+        complement: req.body.address.complement, 
+        city: req.body.address.city, 
+        cep: req.body.address.cep
+    };
+
+    if (!CPF.isValid(cpf)){
+        return res.json({success: false, msg: 'CPF inválido'});
+    }
+    let updatedUser = {username: username, email:email, cpf: cpf, address: address};
+    
+    UserSchema.update({_id: userId}, updatedUser, function(err, result){
+        if (err) throw err;
+
+        console.log (result);
+        return res.json({success: true, msg: result.nModified + ' itens foram alterados'});
+    });
+            
 });
 
 module.exports = router;

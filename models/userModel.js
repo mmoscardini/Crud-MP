@@ -3,7 +3,7 @@ const bcrypt = require ('bcryptjs');
 const configDB = require ('../config/database');
 
 const UserSchema = mongoose.Schema({
-    user: {
+    username: {
         type: String,
         required: true
     },email: {
@@ -14,6 +14,15 @@ const UserSchema = mongoose.Schema({
         type:String,
         required: true
     },
+    cpf:{
+        type: Number
+    },
+    address:{
+        street: String,
+        complement: String,
+        city: String,
+        cep: String
+    },
     userType:{
         //0 == Client
         //1 == Supplier
@@ -23,12 +32,6 @@ const UserSchema = mongoose.Schema({
     registerDate:{
         type: String,
         required: true
-    },
-    resetPasswordToken:{
-        type: String
-    },
-    resetPasswordExpires:{
-        type: Date
     }
 });
 
@@ -73,4 +76,8 @@ module.exports.comparePasswords = function(candidatePassword, hash, callback){
         if (err) throw err;
         callback(null, isMatched);
     });
+}
+
+module.exports.editUser = function(user, callback){
+    user.save(callback);
 }
