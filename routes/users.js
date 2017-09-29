@@ -108,7 +108,7 @@ router.post('/loginAuth', (req,res,next)=> {
                         id: user._id,
                         username: user.username,
                         email: user.email,
-                        userType: user.userType
+                        userType: user.userType,
                     }
                 });
             }
@@ -148,7 +148,7 @@ router.post('/myAccount/edit', passport.authenticate('jwt', {session: false}),  
         if (err) throw err;
 
         console.log (result);
-        return res.json({success: true, msg: result.nModified + ' itens foram alterados'});
+        return res.json({success: true, msg: result.nModified + ' itens foram alterados com sucesso'});
     });
             
 });

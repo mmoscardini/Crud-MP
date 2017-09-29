@@ -5,8 +5,8 @@ export class ValidateService {
 
   constructor() { }
 
-  valideteFormAllFildsFill(form){
-    
+  valideteFormAllFildsFill(formGroup){
+
   }
 
   validateRegisterFilds(user){

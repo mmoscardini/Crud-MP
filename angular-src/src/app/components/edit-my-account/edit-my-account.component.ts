@@ -12,6 +12,8 @@ import {Router} from '@angular/router';
 })
 export class EditMyAccountComponent implements OnInit {
 
+  user: Object;
+
   userId: String;
   username: String;
   email: String;
@@ -31,6 +33,18 @@ export class EditMyAccountComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.auth.getMyAccount().subscribe(data => {
+      this.userId = data.user._id,
+      this.username = data.user.username,
+      this.email = data.user.email,
+      this.cpf = data.user.cpf,
+
+      this.street = data.user.address.street, 
+      this.complement = data.user.address.comlplement
+      this.city = data.user.address.city,
+      this.state = data.user.address.state,
+      this.cep = data.user.address.cep
+    });  
   }
 
   autoCompleteCEP(){
@@ -59,6 +73,46 @@ export class EditMyAccountComponent implements OnInit {
 
   OnProfileEditSubmit(){
 
-  }
+    //chegagem de que noem de usuário e email não estão sendo apagados.
+    if (this.username == "" || this.username == undefined){
+      this.flashMessage.show('Nome completo é obrigatório',{cssClass: 'alert-danger', timeout: 3000});
+      return false;
+    }
+    if (this.email == undefined || this.email == ""){
+      this.flashMessage.show('Email é obrigatório',{cssClass: 'alert-danger', timeout: 3000});
+      return false;
+    }
 
+    //Conferir se o CEP é válido (isso não impede que o valor errado seja salvo na base de dados)
+    this.autoCompleteCEP();
+    
+
+    //Criar um usuário novo com os campos atualizados
+    const updatedUser = {
+      userId: this.userId,
+      username: this.username,
+      email: this.email,
+      cpf: this.cpf,
+      address: {
+          street: this.street, 
+          complement: this.complement, 
+          city: this.city, 
+          state: this.state,
+          cep: this.cep
+      }
+    }   
+    
+    //Requisição para altearção de dados
+    this.auth.editMyAccount(updatedUser).subscribe(data => {
+      if (data.success){
+        this.flashMessage.show(data.msg,{cssClass: 'alert-success', timeout: 3000});
+      }
+      else {
+        this.flashMessage.show(data.msg,{cssClass: 'alert-danger', timeout: 3000});
+        return false;        
+      }
+    }), err =>{
+        this.flashMessage.show('ocorreu um erro ao atualizar os dados. Porfavor tente novamante',{cssClass: 'alert-danger', timeout: 3000});      
+      }
+    }
 }
